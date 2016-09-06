@@ -7,5 +7,5 @@ import java.util.HashMap;
  */
 public class Graph {
 
-    HashMap<Integer, LinkedList> nodes
+    HashMap<Integer, LinkedList> node;
 }
