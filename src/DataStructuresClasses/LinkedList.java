@@ -132,4 +132,22 @@ public class LinkedList {
         nodeBack.next=node.next;
         length--;
     }
+
+    public void deleteNodeValue(int value){
+        LinkNode node=head;
+        LinkNode nodeBack=null;
+
+        if(node.data==value){
+            deleteNodeFromBeginning();
+        }
+
+
+        while(node.data!=value && node.next!=null){
+            nodeBack=node;
+            node=node.next;
+        }
+
+        nodeBack.next=node.next;
+        length--;
+    }
 }
