@@ -9,11 +9,13 @@ public class BinarySearchTree {
         int data;
         BinaryTreeNode right;
         BinaryTreeNode left;
+        BinaryTreeNode parent;
 
         public BinaryTreeNode(int data){
             this.data=data;
             right=null;
             left=null;
+            parent=null;
         }
     }
 
@@ -24,7 +26,7 @@ public class BinarySearchTree {
     }
 
     public boolean deleteNode(int data){
-        return deleteNode(root,data);
+        return (deleteNode(root,data)!=null);
     }
 
     public boolean search(int data){
@@ -32,17 +34,17 @@ public class BinarySearchTree {
     }
 
     public void inOrderTraverse(){
-        System.out.println();
+        System.out.println("Inorder Traversal: ");
         inOrderTraverse(root);
     }
 
     public void preOrderTraverse(){
-        System.out.println();
+        System.out.println("PreOrder Traversal: ");;
         preOrderTraverse(root);
     }
 
     public void postOrderTraverse(){
-        System.out.println();
+        System.out.println("postOrder Traversal: ");;
         postOrderTraverse(root);
     }
 
@@ -55,10 +57,12 @@ public class BinarySearchTree {
         else{
             if(data>node.data){
                 node.right=addNode(node.right,data);
+                node.right.parent=node;
                 return node;
             }
             else if(data<node.data){
                 node.left=addNode(node.left,data);
+                node.left.parent=node;
                 return node;
             }
             else{
@@ -67,34 +71,35 @@ public class BinarySearchTree {
         }
     }
 
-    public boolean deleteNode(BinaryTreeNode node, int data){
+    public BinaryTreeNode deleteNode(BinaryTreeNode node, int data){
         if(node==null){
-            return false;
+            return null;
         }
         if(data>node.data){
-            return deleteNode(node.right,data);
+            node.right= deleteNode(node.right,data);
+            return node;
         }
         else if(data<node.data){
-            return deleteNode(node.left, data);
+            node.left= deleteNode(node.left, data);
+            return node;
         }
         else{
             if(node.right==null && node.left==null){
-                node=null;
-                return true;
+                return null;
             }
             else if(node.right==null){
-                node=node.left;
-                return true;
+                node.left.parent=node.parent;
+                return node.left;
             }
             else if(node.left==null){
-                node=node.right;
-                return true;
+                node.right.parent=node.parent;
+                return node.right;
             }
             else{
                 int val=minValue(node.right);
                 node.data=val;
-                deleteNode(node.right,val);
-                return true;
+                node.right=deleteNode(node.right,val);
+                return node;
             }
         }
     }
@@ -116,21 +121,27 @@ public class BinarySearchTree {
     }
 
     public void inOrderTraverse(BinaryTreeNode node){
-        inOrderTraverse(node.left);
-        System.out.print(node.data+" ");
-        inOrderTraverse(node.right);
+        if(node!=null) {
+            inOrderTraverse(node.left);
+            System.out.print(node.data + " ");
+            inOrderTraverse(node.right);
+        }
     }
 
     public void preOrderTraverse(BinaryTreeNode node){
-        System.out.print(node.data+" ");
-        preOrderTraverse(node.left);
-        preOrderTraverse(node.right);
+        if(node!=null) {
+            System.out.print(node.data + " ");
+            preOrderTraverse(node.left);
+            preOrderTraverse(node.right);
+        }
     }
 
     public void postOrderTraverse(BinaryTreeNode node){
-        postOrderTraverse(node.left);
-        postOrderTraverse(node.right);
-        System.out.print(node.data+" ");
+        if(node!=null) {
+            postOrderTraverse(node.left);
+            postOrderTraverse(node.right);
+            System.out.print(node.data + " ");
+        }
     }
 
 

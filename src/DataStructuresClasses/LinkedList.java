@@ -40,6 +40,11 @@ public class LinkedList {
 
 
     public void insertToEnd(int data){
+        if(head==null){
+            head=new LinkNode(data);
+            return;
+        }
+
         LinkNode node=head;
         LinkNode newNode=new LinkNode(data);
         while (node.next!=null){
@@ -112,6 +117,9 @@ public class LinkedList {
     }
 
     public void deleteNodeFromPosition(int position){
+        if (position>length){
+                return;
+        }
         LinkNode node=head;
         LinkNode nodeBack=null;
 
@@ -137,17 +145,23 @@ public class LinkedList {
         LinkNode node=head;
         LinkNode nodeBack=null;
 
+        if(head==null){
+            return;
+        }
+
         if(node.data==value){
             deleteNodeFromBeginning();
         }
 
 
-        while(node.data!=value && node.next!=null){
+        while( node!=null && node.data!=value){
             nodeBack=node;
             node=node.next;
         }
 
-        nodeBack.next=node.next;
-        length--;
+        if(node!=null) {
+            nodeBack.next = node.next;
+            length--;
+        }
     }
 }
